@@ -1,5 +1,7 @@
 package lesson5;
 
+import java.util.concurrent.BrokenBarrierException;
+
 public class Car implements Runnable {
     private static int CARS_COUNT;
     private static String winCar;
@@ -34,15 +36,10 @@ public class Car implements Runnable {
             System.out.println(this.name + " готовится");
             Thread.sleep(500 + (int)(Math.random() * 800));
             System.out.println(this.name + " готов");
-            MainClass.cdl.countDown();
+            MainClass.cb.await();
+
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            MainClass.cdl.await();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
@@ -54,6 +51,13 @@ public class Car implements Runnable {
         if (winCar == null){
             winCar = this.name;
             System.out.println(winCar + " - WIN");
+        }
+        try {
+            MainClass.cb.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 }
