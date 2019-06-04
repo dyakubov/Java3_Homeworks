@@ -2,8 +2,10 @@ package Lesson1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 class ArrToList<T> {
+
     private T[] arr;
 
 
